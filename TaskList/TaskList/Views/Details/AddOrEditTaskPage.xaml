@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:mvvm="http://prismlibrary.com"
+             xmlns:local="clr-namespace:TaskList.Views.Details;assembly=TaskList"
+             xmlns:xct="http://xamarin.com/schemas/2020/toolkit"
+             xmlns:ios="clr-namespace:Xamarin.Forms.PlatformConfiguration.iOSSpecific;assembly=Xamarin.Forms.Core"
+             mvvm:ViewModelLocator.AutowireViewModel="True"
+             x:Class="TaskList.Views.Details.AddOrEditTaskPage"
+             x:DataType="local:AddOrEditTaskPageViewModel"
+             ios:Page.UseSafeArea="True"
+             Title="{Binding Title.Value}">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <Style TargetType="Button">
+                <Setter Property="WidthRequest" Value="100" />
+            </Style>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    <ContentPage.Content>
+        <ScrollView>
+            <StackLayout VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand"
+                         Padding="10"
+                         Spacing="8">
+                <StackLayout Spacing="3">
+                    <Label Text="Title:" />
+                    <Entry Text="{Binding TaskTitle.Value}" />
+                </StackLayout>
+                <StackLayout Spacing="3">
+                    <Label Text="Description:" />
+                    <Frame HasShadow="False"
+                           BorderColor="Gray"
+                           Padding="5">
+                        <Editor Text="{Binding TaskDescription.Value}"
+                                HeightRequest="150"
+                                AutoSize="Disabled" />
+                    </Frame>
+                </StackLayout>
+                <StackLayout Spacing="3">
+                    <Label Text="Completed:" />
+                    <Switch IsToggled="{Binding IsCompleted.Value}" />
+                </StackLayout>
+                
+                <StackLayout Orientation="Horizontal" VerticalOptions="EndAndExpand" Spacing="5"
+                             HorizontalOptions="EndAndExpand">
+                    <Button Text="Delete" BackgroundColor="IndianRed" TextColor="White"
+                            IsVisible="{Binding TaskItem.Value, Converter={xct:IsNotNullOrEmptyConverter}}"
+                            Command="{Binding DeleteCommand}" />
+                    
+                    <Button Text="Save" BackgroundColor="CornflowerBlue" TextColor="White"
+                            Command="{Binding SaveCommand}" />
+                </StackLayout>
+            </StackLayout>
+        </ScrollView>
+    </ContentPage.Content>
+</ContentPage>

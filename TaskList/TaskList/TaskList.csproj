@@ -1,0 +1,28 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>netstandard2.0</TargetFramework>
+    </PropertyGroup>
+
+    <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+        <DebugType>pdbonly</DebugType>
+        <DebugSymbols>true</DebugSymbols>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <PackageReference Include="Prism.DryIoc.Forms" Version="8.1.97" />
+        <PackageReference Include="ReactiveProperty" Version="8.0.5" />
+        <PackageReference Include="sqlite-net-pcl" Version="1.7.335" />
+        <PackageReference Include="Xamarin.CommunityToolkit" Version="2.0.1" />
+        <PackageReference Include="Xamarin.Forms" Version="5.0.0.2401" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <None Remove="Fonts\fa-light-300.otf" />
+      <EmbeddedResource Include="Fonts\fa-light-300.otf" />
+      <None Remove="Fonts\fa-regular-400.otf" />
+      <EmbeddedResource Include="Fonts\fa-regular-400.otf" />
+      <None Remove="Fonts\fa-solid-900.otf" />
+      <EmbeddedResource Include="Fonts\fa-solid-900.otf" />
+    </ItemGroup>
+</Project>

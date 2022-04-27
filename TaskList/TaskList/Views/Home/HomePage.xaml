@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:TaskList.Views.Home;assembly=TaskList"
+             xmlns:effects="http://xamarin.com/schemas/2020/toolkit"
+             xmlns:xct="http://xamarin.com/schemas/2020/toolkit"
+             xmlns:ios="clr-namespace:Xamarin.Forms.PlatformConfiguration.iOSSpecific;assembly=Xamarin.Forms.Core"
+             xmlns:fonts="clr-namespace:TaskList.Fonts;assembly=TaskList"
+             xmlns:mvvm="http://prismlibrary.com"
+             mvvm:ViewModelLocator.AutowireViewModel="True"
+             x:Class="TaskList.Views.Home.HomePage"
+             x:DataType="local:HomePageViewModel"
+             NavigationPage.BackButtonTitle=""
+             ios:Page.UseSafeArea="True"
+             Title="Tasks">
+    <ContentPage.Content>
+        <Grid VerticalOptions="FillAndExpand"
+              HorizontalOptions="FillAndExpand"
+              Padding="5"
+              BackgroundColor="White">
+            <CollectionView HorizontalOptions="FillAndExpand"
+                            VerticalOptions="FillAndExpand"
+                            ItemsSource="{Binding Tasks.Value}">
+                <CollectionView.ItemsLayout>
+                    <LinearItemsLayout Orientation="Vertical" ItemSpacing="8" />
+                </CollectionView.ItemsLayout>
+                <CollectionView.ItemTemplate>
+                    <DataTemplate x:DataType="local:TaskItemViewModel">
+                        <StackLayout Spacing="5" xct:TouchEffect.Command="{Binding ViewDetailsCommand}"
+                                     Padding="0,5">
+                            <Label Text="{Binding Title.Value}" />
+                            <Label Text="{Binding Status.Value, StringFormat='Status: {0}'}" />
+                            <Label Text="{Binding CreatedOn, StringFormat='Created at: {0:MM/dd/yyyy}'}" />
+                        </StackLayout>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+                <CollectionView.EmptyView>
+                    <StackLayout VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand">
+                        <Label Text="No items found" HorizontalOptions="Center" VerticalOptions="Start"
+                               IsVisible="{Binding Tasks.Value, Converter={xct:ListIsNullOrEmptyConverter}}"/>
+                    </StackLayout>
+                </CollectionView.EmptyView>
+            </CollectionView>
+            <Frame HorizontalOptions="End"
+                   VerticalOptions="End"
+                   Padding="2"
+                   effects:TouchEffect.NativeAnimation="True"
+                   effects:TouchEffect.Command="{Binding AddTaskCommand}"
+                   HeightRequest="50"
+                   WidthRequest="50"
+                   CornerRadius="25"
+                   BackgroundColor="Blue">
+                <Label Text="{x:Static fonts:FaIcon.Plus}"
+                       HorizontalOptions="Center"
+                       VerticalOptions="Center"
+                       FontFamily="FontAwesomeRegular"
+                       FontSize="20"
+                       TextColor="White"
+                       InputTransparent="True" />
+            </Frame>
+            <ActivityIndicator IsRunning="{Binding IsBusy.Value}"
+                               IsVisible="{Binding IsBusy.Value}"
+                               HorizontalOptions="Center"
+                               VerticalOptions="Start"
+                               Color="Blue" />
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>
